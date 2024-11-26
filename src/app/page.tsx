@@ -14,7 +14,7 @@ export default async function Home() {
         <ProjectSection projects={projects} />
         <BlogSection blogs={blogs} />
         <footer className="flex justify-center items-center p-4">
-          <p>Made with ❤️ by Adefemi Oseni</p>
+          <p>Made with ❤️ by Adefemigreat</p>
         </footer>
       </main>
     );
