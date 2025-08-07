@@ -1,10 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
 import * as TWEEN from '@tweenjs/tween.js';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const threeContainerRef = useRef<HTMLDivElement>(null);
   const cssContainerRef = useRef<HTMLDivElement>(null);
 
@@ -18,7 +19,12 @@ function App() {
     let hasNavigatedOnce = false;
     let animationFrameId: number;
 
-    const textureLoader = new THREE.TextureLoader();
+    const loadingManager = new THREE.LoadingManager();
+    loadingManager.onLoad = () => {
+      // Fallback: ensure loading is cleared if all assets complete
+      setIsLoading(false);
+    };
+    const textureLoader = new THREE.TextureLoader(loadingManager);
 
     const ACTIVE_SECTION_X = 0;
     const SECTION_Y = 0;
@@ -141,12 +147,22 @@ function App() {
     }
 
     function createEarth() {
-      textureLoader.load('/2k_earth_daymap.jpg', (texture) => {
-        const geometry = new THREE.SphereGeometry(5, 64, 64);
-        const material = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.8, metalness: 0.1 });
-        earth = new THREE.Mesh(geometry, material);
-        scene.add(earth);
-      }, undefined, (err) => console.error('Earth texture load error:', err));
+      const geometry = new THREE.SphereGeometry(5, 64, 64);
+      const material = new THREE.MeshStandardMaterial({ color: 0x224466, roughness: 0.8, metalness: 0.1 });
+      earth = new THREE.Mesh(geometry, material);
+      scene.add(earth);
+      textureLoader.load(
+        '/2k_earth_daymap.jpg',
+        (texture) => {
+          material.map = texture;
+          material.color.set(0xffffff);
+          material.needsUpdate = true;
+        },
+        undefined,
+        (err) => {
+          console.error('Earth texture load error:', err);
+        }
+      );
     }
 
     function createStars() {
@@ -467,6 +483,7 @@ function App() {
       cssRenderer.setSize(window.innerWidth, window.innerHeight);
     }
 
+    let hasShownFirstFrame = false;
     function animate() {
       animationFrameId = requestAnimationFrame(animate);
       TWEEN.update(performance.now());
@@ -484,6 +501,11 @@ function App() {
       
       renderer.render(scene, camera);
       cssRenderer.render(scene, camera);
+
+      if (!hasShownFirstFrame && earth) {
+        hasShownFirstFrame = true;
+        setIsLoading(false);
+      }
     }
 
     init();
@@ -504,11 +526,17 @@ function App() {
 
   return (
     <>
+      {isLoading && (
+        <div id="loading-overlay" role="status" aria-live="polite">
+          <div className="loader-spinner" />
+          <div className="loader-text">Loading</div>
+        </div>
+      )}
       <div id="info-initial">Click arrows to navigate sections</div>
       <div id="threejs-container" ref={threeContainerRef}></div>
       <div id="css3d-container" ref={cssContainerRef}></div>
 
-      <div id="navigation-controls">
+      <div id="navigation-controls" aria-hidden={isLoading}>
         <button id="prev-section" className="nav-arrow" title="Previous Section">←</button>
         <button id="next-section" className="nav-arrow" title="Next Section">→</button>
       </div>
