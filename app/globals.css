@@ -1,0 +1,82 @@
+:root {
+  --space-0: #030611;
+  --space-1: #060a1c;
+  --space-2: #0b1230;
+  --ink: #0a1030;
+  --paper: #efe9dc;
+  --paper-2: #e3dccb;
+  --paper-3: #cfc6b0;
+  --amber: #f0b840;
+  --amber-deep: #c88823;
+  --cyan: #5ad6ff;
+  --cyan-deep: #1a7a9e;
+  --rust: #c2573a;
+  --moss: #4b7c5f;
+  --ink-line: #0c1438;
+  --star: #f4eed4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--space-0);
+  color: var(--paper);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+#root,
+main {
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.02em;
+}
+
+.serif {
+  font-family: var(--font-serif), serif;
+  font-style: italic;
+}
+
+.eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+/* Performance: hint the browser about the heavy fixed layers */
+.layer-fixed {
+  position: fixed;
+  inset: 0;
+  will-change: transform, opacity;
+  contain: layout style paint;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
