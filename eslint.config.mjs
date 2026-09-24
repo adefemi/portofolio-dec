@@ -35,4 +35,13 @@ export default [
       "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
     },
   },
+  {
+    // React Three Fiber: JSX props map to three.js objects, and mutating
+    // camera/scene inside useFrame is the intended pattern.
+    files: ["components/journey/scene/**/*.{ts,tsx}", "components/journey/JourneyCanvas.tsx"],
+    rules: {
+      "react/no-unknown-property": "off",
+      "react-hooks/immutability": "off",
+    },
+  },
 ];
