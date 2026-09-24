@@ -1,12 +1,21 @@
 # Adefemi Oseni — Portfolio (Next.js)
 
-A scroll-driven, single-page portfolio replicating the original `Adefemi Portfolio.html`
-prototype as a fully typed Next.js 16 (App Router) project.
+A scroll-driven 3D journey built with Three.js / React Three Fiber on Next.js 16.
+Scrolling flies the camera from orbit down to Lagos and through the planet:
 
-The site is one continuous narrative: an intro hero with a rotating SVG globe, a
-"descend into Lagos" zoom, then five landmark scenes (About / Projects / Experience /
-Skills / Contact) — each pairing a hand-drawn isometric SVG illustration with
-accompanying copy.
+| Depth | Scene | Section |
+|---|---|---|
+| Low Earth orbit | Textured globe, night lights, atmosphere | Hero |
+| Stratosphere | Above the cloud deck | About (sign hung from a balloon) |
+| Sea level | Open water off the coast | Projects (sign on stilts) |
+| Highlands | Mountain pass | Experience (trail marker) |
+| Ground | Valley plateau | Skills (station board) |
+| Crust → core | Rock strata shaft, molten core | Contact (plaque on chains) |
+
+Each section is a landmark signboard. The signs are server-rendered HTML (crawlable,
+readable without JS/WebGL); on screens ≥ 900×560 the scene lifts them into the 3D world
+with CSS3D so the text stays real, selectable HTML in true perspective. Smaller screens
+show the same signs in the page flow.
 
 ## Getting started
 
@@ -23,51 +32,26 @@ Node 18.18+ required.
 ## Project structure
 
 ```
-app/
-  fonts.ts         next/font Google Fonts (Space Grotesk, IBM Plex Mono, Instrument Serif)
-  globals.css      design tokens + reduced-motion support
-  layout.tsx      <html> + SEO metadata + viewport
-  page.tsx         server-rendered shell that mounts <Portfolio/>
-components/
-  Portfolio.tsx    main client component (scroll loop, dynamic landmark imports)
-  Earth.tsx        SVG globe with continents, atmosphere, terminator shading
-  Stars.tsx        deterministic starfield
-  Hud.tsx          IntroHero, ZoomHUD, TopNav, ProgressRail, ScrollHint
-  scenes/          5 isometric SVG scenes (Desk, Workshop, Tower, Constellation, Tower)
-  landmarks/       5 content panels (About, Projects, Experience, Skills, Contact)
-  types.ts         shared scroll-state types and section sizing constants
-.reference/        the original HTML/JSX prototype, kept for reference
+app/                    layout, globals.css (tokens + sign styles), page.tsx
+components/journey/
+  content.ts            all copy — edit this to update the site
+  Sections.tsx          server-rendered hero + signboards
+  Journey.tsx           nav, depth gauge, scroll → journey mapping
+  JourneyCanvas.tsx     WebGL canvas (client only, with fallback)
+  store.ts              shared scroll/camera state
+  scene/                Globe, Sky, Clouds, Ocean, Terrain, Beacons, Core, Signs,
+                        cameraPath (keyframes + gauge), signs (sign placement)
+public/textures/        NASA Blue Marble–derived Earth textures (public domain)
 ```
 
-## Performance optimizations
+Append `?quality=low` or `?quality=high` to the URL to force the render tier.
 
-- **Single requestAnimationFrame loop** coalesces scroll + resize events; state only
-  updates when the computed phase actually changes.
-- **`useSyncExternalStore`** for `prefers-reduced-motion` (no setState-in-effect).
-- **`next/dynamic` + `ssr: false`** for the five landmark panels — only the active
-  landmark is loaded and parsed in the browser.
-- **`next/font`** self-hosts and preloads Space Grotesk / IBM Plex Mono with
-  `font-display: swap`. Instrument Serif is loaded but not preloaded since it appears
-  below the fold.
-- **`React.memo`** on every leaf component (Earth, Stars, scenes, landmarks, HUD).
-- **Deterministic floating-point projections** (rounded to 2 decimal places) eliminate
-  server/client hydration mismatches in the landmark pin coordinates.
-- **CSS `contain: strict`** + `will-change` on the heavy fixed layers (background,
-  globe, hero, HUD, landmark panel) so the compositor can promote them without
-  invalidating the rest of the document.
-- **`translate3d`** for the parallax cards forces GPU compositing.
-- **Reduced-motion aware**: rotation animation is skipped when the user prefers
-  reduced motion; smooth-scroll falls back to instant.
-- **Production console removal** (except `error`) via the SWC compiler config.
+## Performance
 
-## Accessibility
-
-- Keyboard-focusable nav and progress-rail buttons.
-- `aria-label` / `aria-current` on navigation.
-- Decorative SVGs marked `aria-hidden`.
-- All animations respect `prefers-reduced-motion`.
-
-## SEO
-
-OpenGraph + Twitter cards, canonical metadata, robots config and theme color are all
-declared in `app/layout.tsx`.
+- One camera path sampled per frame from smoothed scroll progress; React only re-renders
+  when the active section changes.
+- Low-power tier (phones, ≤ 4 cores): 2K globe texture, coarser terrain, fewer clouds and
+  trees, lower pixel ratio.
+- Scenes that are off-camera (orbit vs surface vs underground) are hidden, not rendered.
+- The 3D bundle is code-split and loads after the page content.
+- `prefers-reduced-motion`: the camera cuts between stops instead of flying.

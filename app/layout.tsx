@@ -70,7 +70,13 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} ${instrumentSerif.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {/* without JavaScript the 3D scene never loads: skip the loader */}
+        <noscript>
+          <style>{`.loader{display:none}`}</style>
+        </noscript>
+        {children}
+      </body>
     </html>
   );
 }
