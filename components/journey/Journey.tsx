@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import dynamic from "next/dynamic";
 import { journey, JOURNEY_END, SECTION_IDS } from "./store";
 import { NAV } from "./content";
+import { Loader } from "./Loader";
 
 const JourneyCanvas = dynamic(() => import("./JourneyCanvas"), { ssr: false });
 
@@ -127,6 +128,7 @@ export function JourneyChrome() {
 
   return (
     <>
+      <Loader />
       <JourneyCanvas />
       <div ref={veil} className="journey-veil" aria-hidden />
 

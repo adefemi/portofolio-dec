@@ -38,6 +38,18 @@ export const journey: JourneyStore = {
   gaugeDot: null,
 };
 
+export interface LoadDetail {
+  progress: number; // 0 → 1
+  label: string;
+  done?: boolean;
+}
+
+/** Tell the loading screen how far the 3D scene has got. */
+export function reportLoad(detail: LoadDetail) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new CustomEvent<LoadDetail>("journey:load", { detail }));
+}
+
 export const JOURNEY_END = SECTION_IDS.length - 1;
 
 export const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));

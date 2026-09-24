@@ -10,6 +10,7 @@ import {
   Group,
   Mesh,
   ShaderMaterial,
+  RepeatWrapping,
   SRGBColorSpace,
   TextureLoader,
   Vector3,
@@ -136,6 +137,10 @@ function useEarthTextures(lowPower: boolean) {
   day.colorSpace = SRGBColorSpace;
   night.colorSpace = SRGBColorSpace;
   day.anisotropy = 8;
+  // The cloud map scrolls east over time: it must wrap around the globe,
+  // or the edge column gets smeared into horizontal streaks.
+  clouds.wrapS = RepeatWrapping;
+  clouds.needsUpdate = true;
   return { day, night, water, clouds };
 }
 

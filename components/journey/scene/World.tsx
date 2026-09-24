@@ -3,7 +3,7 @@
 import { Suspense, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Color, FogExp2, Group, PerspectiveCamera, Vector3 } from "three";
-import { journey, pulse, smooth, JOURNEY_END } from "../store";
+import { journey, pulse, smooth, JOURNEY_END, reportLoad } from "../store";
 import { Globe, LAGOS_POINT, GLOBE_R } from "./Globe";
 import { Sky } from "./Sky";
 import { Clouds, CLOUD_BASE, CLOUD_TOP } from "./Clouds";
@@ -153,6 +153,17 @@ function Rig({ orbit, surface, below }: { orbit: React.RefObject<Group | null>; 
   return null;
 }
 
+/** Mounts only once the globe's textures have resolved; reports after its first frame. */
+function FirstFrame() {
+  const sent = useRef(false);
+  useFrame(() => {
+    if (sent.current) return;
+    sent.current = true;
+    reportLoad({ progress: 1, label: "Entering orbit", done: true });
+  });
+  return null;
+}
+
 export function World() {
   const { size } = useThree();
   const signs3d = size.width >= 900 && size.height >= 560;
@@ -166,6 +177,7 @@ export function World() {
       <group ref={orbit}>
         <Suspense fallback={null}>
           <Globe />
+          <FirstFrame />
         </Suspense>
         <directionalLight position={[-300, 150, 400]} intensity={1} />
       </group>
