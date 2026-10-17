@@ -22,6 +22,19 @@ export const GAMES_INTRO = {
 
 export const GAMES: ReadonlyArray<Game> = [
   {
+    slug: "mario-25d",
+    title: "Super Plumber 2.5D",
+    tag: "Remake · Oct 2026",
+    summary:
+      "World 1-1 from the 1985 classic, rebuilt tile by tile in 2.5D with my own hero, horned beetles, star blocks and chiptune music. Same pipes, same pits, same flagpole.",
+    controls: "Move: arrows / A D · Jump: Space / Z (hold for higher) · Run: Shift / X · Phone: turn sideways and use the on-screen buttons",
+    orientation: "landscape",
+    // video id goes here once it's on YouTube; until then "Watch the video" opens the channel
+    videos: [{ id: "", title: "Video coming soon" }],
+    stack: ["Godot 4", "GDScript", "Blender"],
+    accent: "#2bb5a8",
+  },
+  {
     slug: "contra",
     title: "Contra 3D",
     tag: "Remake · Sep 2026",
@@ -76,7 +89,10 @@ export const GAMES: ReadonlyArray<Game> = [
 
 export const gameBySlug = (slug: string) => GAMES.find((g) => g.slug === slug);
 
-export const youtubeUrl = (id: string) => `https://youtu.be/${id}`;
+export const YOUTUBE_CHANNEL = "https://www.youtube.com/@AdefemiGreat";
+
+/** A video's link; an empty id (video not uploaded yet) falls back to the channel. */
+export const youtubeUrl = (id: string) => (id ? `https://youtu.be/${id}` : YOUTUBE_CHANNEL);
 
 /** In-game screenshot shipped next to each build. */
 export const gameCover = (slug: string) => `/play/${slug}/cover.jpg`;
