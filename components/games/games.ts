@@ -29,8 +29,7 @@ export const GAMES: ReadonlyArray<Game> = [
       "World 1-1 from the 1985 classic, rebuilt tile by tile in 2.5D with my own hero, horned beetles, star blocks and chiptune music. Same pipes, same pits, same flagpole.",
     controls: "Move: arrows / A D · Jump: Space / Z (hold for higher) · Run: Shift / X · Phone: turn sideways and use the on-screen buttons",
     orientation: "landscape",
-    // video id goes here once it's on YouTube; until then "Watch the video" opens the channel
-    videos: [{ id: "", title: "Video coming soon" }],
+    videos: [{ id: "gNBqGY5pzV8", title: "Super Mario Bros World 1-1 Remade in 2.5D (Godot)" }],
     stack: ["Godot 4", "GDScript", "Blender"],
     accent: "#2bb5a8",
   },
