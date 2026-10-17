@@ -1,6 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+<script>
+/* Mobile sound unlock: on the first tap, tell iPhones this page plays media (so
+   the ring/silent switch doesn't mute it), start a silent HTML audio element
+   (older iOS), and wake every Web Audio context the game created. */
+(function () {
+  var contexts = [];
+  var AC = window.AudioContext || window.webkitAudioContext;
+  if (AC) {
+    var Wrapped = function () { var c = new (Function.prototype.bind.apply(AC, [null].concat([].slice.call(arguments))))(); contexts.push(c); return c; };
+    Wrapped.prototype = AC.prototype;
+    window.AudioContext = Wrapped;
+    if (window.webkitAudioContext) window.webkitAudioContext = Wrapped;
+  }
+  var done = false;
+  function unlock() {
+    try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (e) {}
+    if (!done) {
+      done = true;
+      try {
+        var a = document.createElement("audio");
+        a.setAttribute("playsinline", "");
+        a.loop = true;
+        a.src = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=";
+        a.play().catch(function () {});
+      } catch (e) {}
+    }
+    contexts.forEach(function (c) { if (c.state !== "running") c.resume().catch(function () {}); });
+  }
+  ["touchstart", "touchend", "pointerdown", "click", "keydown"].forEach(function (t) {
+    window.addEventListener(t, unlock, { capture: true, passive: true });
+  });
+})();
+</script>
+
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
 		<title>Gate Runner: Zombie Rush</title>
@@ -111,7 +145,7 @@ body {
 
 		<script src="../engine/godot.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"../engine/godot","mainPack":"index.pck","experimentalVK":false,"fileSizes":{"index.pck":17424596,"../engine/godot.wasm":39513091},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"../engine/godot","mainPack":"index.pck","experimentalVK":false,"fileSizes":{"index.pck":17424836,"../engine/godot.wasm":39513091},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
 const GODOT_THREADS_ENABLED = false;
 const engine = new Engine(GODOT_CONFIG);
 

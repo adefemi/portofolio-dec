@@ -37,23 +37,11 @@ export const GAMES: ReadonlyArray<Game> = [
     accent: "#e07a5a",
   },
   {
-    slug: "gate-runner",
-    title: "Gate Runner",
-    tag: "Fake ad made real · Sep 2026",
-    summary:
-      "The original one-level prototype: the math-gate crowd runner from the mobile ads, but real. Steer through the right gates and multiply your crowd.",
-    controls: "Drag / swipe left and right to steer",
-    orientation: "portrait",
-    videos: [{ id: "mOfEJ3BbeCM", title: "I Made the Fake Mobile Game Ad REAL (and it's actually fun)" }],
-    stack: ["Godot 4", "GDScript"],
-    accent: "#5ad6ff",
-  },
-  {
     slug: "zombie-rush",
-    title: "Zombie Rush",
-    tag: "Gate Runner sequel · Full game · Sep 2026",
+    title: "Gate Runner: Zombie Rush",
+    tag: "Fake ad made real · Full game · Sep 2026",
     summary:
-      "The sequel to Gate Runner, grown into a full mobile game: 30 levels across city, desert and snow, zombie hordes, a boss at the end of every level, and army, firepower and income upgrades.",
+      "The math-gate crowd runner from the mobile ads, made real and grown into a full game: 30 levels across city, desert and snow, zombie hordes, a boss at the end of every level, and army, firepower and income upgrades.",
     controls: "Drag / swipe to steer · tap the menus",
     orientation: "portrait",
     videos: [{ id: "mOfEJ3BbeCM", title: "I Made the Fake Mobile Game Ad REAL (and it's actually fun)" }],

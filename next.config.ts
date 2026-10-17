@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production" ? { exclude: ["error"] } : false,
   },
+  // the Gate Runner prototype was folded into the full game
+  async redirects() {
+    return [{ source: "/games/gate-runner", destination: "/games/zombie-rush", permanent: true }];
+  },
   turbopack: {
     root: path.join(__dirname),
   },
