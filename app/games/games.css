@@ -1,0 +1,250 @@
+/* ---------- arcade (/games) ---------- */
+
+.arcade {
+  min-height: 100svh;
+  background:
+    radial-gradient(90% 60% at 80% -10%, rgba(90, 214, 255, 0.1), transparent 60%),
+    radial-gradient(70% 50% at 0% 0%, rgba(240, 184, 64, 0.08), transparent 60%),
+    var(--space-0);
+}
+
+.topbar--static {
+  position: sticky;
+  background: linear-gradient(180deg, rgba(3, 6, 17, 0.92), rgba(3, 6, 17, 0));
+}
+
+.arcade-main {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: 24px var(--gutter) 96px;
+}
+
+.arcade-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 48px 0 40px;
+  max-width: 760px;
+}
+.arcade-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(34px, 5vw, 62px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.arcade-title--game {
+  font-size: clamp(30px, 4vw, 48px);
+}
+.arcade-body {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--paper-dim);
+  max-width: 62ch;
+}
+
+.arcade-back {
+  margin: 8px 0 18px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.arcade-back a {
+  color: var(--paper-dim);
+  text-decoration: none;
+}
+.arcade-back a:hover {
+  color: var(--amber);
+}
+
+/* game cards reuse the signboard's enamel look */
+.game-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr));
+  gap: 22px;
+}
+.game-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--sign-ink);
+  background: linear-gradient(180deg, var(--sign-face), var(--sign-face-2));
+  border-radius: 14px;
+  border-top: 3px solid var(--p-accent, var(--sign-amber));
+  box-shadow:
+    0 0 0 1px rgba(247, 239, 221, 0.12),
+    0 30px 60px -30px rgba(0, 0, 0, 0.8);
+}
+.game-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #1c0f07;
+}
+.game-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* most covers are 9:16 phone shots: keep the action, not the sky */
+  object-position: center 40%;
+  transition: transform 0.4s ease;
+}
+.game-thumb:hover img {
+  transform: scale(1.04);
+}
+.game-play-badge {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--amber);
+  color: var(--space-0);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.game-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 18px 18px;
+}
+.game-info h2 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.game-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  border: 1px solid rgba(247, 239, 221, 0.28);
+  border-radius: 999px;
+  color: var(--sign-ink);
+  text-decoration: none;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+.btn--primary {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--space-0);
+  font-weight: 600;
+}
+.btn--primary:hover {
+  background: #ffd067;
+  color: var(--space-0);
+}
+
+/* play page */
+.game-stage {
+  position: relative;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  box-shadow:
+    0 0 0 1px var(--hairline),
+    0 0 0 4px rgba(0, 0, 0, 0.6),
+    0 40px 80px -30px rgba(0, 0, 0, 0.9);
+}
+.game-stage iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.game-stage--landscape {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: calc(100svh - 120px);
+}
+.game-stage--portrait {
+  height: min(calc(100svh - 120px), 900px);
+  aspect-ratio: 9 / 16;
+  max-width: 100%;
+}
+
+.game-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 760px;
+  margin: 36px auto 0;
+}
+.game-meta .project-tag {
+  margin: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--p-accent, var(--amber));
+}
+.game-meta .btn {
+  color: var(--paper);
+  border-color: var(--hairline);
+}
+.game-meta .btn--primary {
+  color: var(--space-0);
+}
+.game-meta .chips li {
+  color: var(--paper-dim);
+  border-color: var(--hairline);
+}
+.game-controls {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--paper-dim);
+}
+.game-controls span {
+  margin-right: 8px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+/* phones: let the game fill the screen width */
+@media (max-width: 640px) {
+  .game-stage--portrait {
+    height: auto;
+    width: 100%;
+    max-height: calc(100svh - 110px);
+  }
+  .game-stage--landscape {
+    border-radius: 8px;
+  }
+}
