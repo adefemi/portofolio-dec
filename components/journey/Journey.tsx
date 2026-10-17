@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { journey, JOURNEY_END, SECTION_IDS } from "./store";
 import { NAV } from "./content";
 import { Loader } from "./Loader";
@@ -148,6 +149,7 @@ export function JourneyChrome() {
               {n.label}
             </a>
           ))}
+          <Link href="/games">Games</Link>
         </nav>
       </header>
 

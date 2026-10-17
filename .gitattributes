@@ -1,0 +1,2 @@
+[attr]godot-build -text -diff
+public/play/** godot-build
