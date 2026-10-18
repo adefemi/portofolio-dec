@@ -26,8 +26,8 @@ export const GAMES: ReadonlyArray<Game> = [
     title: "Super Plumber 2.5D",
     tag: "Remake · Oct 2026",
     summary:
-      "World 1-1 from the 1985 classic, rebuilt tile by tile in 2.5D with my own hero, horned beetles, star blocks and chiptune music. Same pipes, same pits, same flagpole.",
-    controls: "Move: arrows / A D · Jump: Space / Z (hold for higher) · Run: Shift / X · Phone: turn sideways and use the on-screen buttons",
+      "Worlds 1-1 and 1-2 from the 1985 classic, rebuilt in 2.5D with my own hero, horned beetles, star blocks and chiptune music. Clear 1-1 and you drop into the underground: lifts, a blaster power-up, and the warp zone if you can find the way over the ceiling.",
+    controls: "Move: arrows / A D · Jump: Space / Z (hold for higher) · Run: Shift / X · Fire the blaster: F / C / J · Pipes: S / Down · Phone: turn sideways and use the on-screen buttons",
     orientation: "landscape",
     videos: [{ id: "gNBqGY5pzV8", title: "Super Mario Bros World 1-1 Remade in 2.5D (Godot)" }],
     stack: ["Godot 4", "GDScript", "Blender"],
