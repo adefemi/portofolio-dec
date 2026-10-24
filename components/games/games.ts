@@ -22,6 +22,18 @@ export const GAMES_INTRO = {
 
 export const GAMES: ReadonlyArray<Game> = [
   {
+    slug: "black-clover",
+    title: "Black Clover: Five Leaf Sky (fan game)",
+    tag: "Unofficial fan game · Open world · Oct 2026",
+    summary:
+      "Play as Asta and Yuno, swap between them, fight the captains and close the crack in the sky. Deflect spells, dash with Black Divider, fly over the map as Yuno, and decide who becomes the next Wizard King. An unofficial fan game with an original story, free and never sold.",
+    controls: "Move: WASD / arrows · Camera: mouse · Attack / deflect: left click or J · Jump: Space (twice as Yuno to fly) · Dodge: Shift or right click · Skills: E and Q · Swap hero: Tab · Talk / open: F · Best on desktop",
+    orientation: "landscape",
+    videos: [{ id: "pBdELqchu00", title: "Black Clover Open World Game in Godot | Play It Free" }],
+    stack: ["Godot 4", "GDScript", "Blender", "TRELLIS.2"],
+    accent: "#b04df0",
+  },
+  {
     slug: "mario-25d",
     title: "Super Plumber 2.5D",
     tag: "Remake · Oct 2026",
