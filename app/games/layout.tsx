@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Script from "next/script";
 import "./games.css";
 
 export default function GamesLayout({ children }: { children: React.ReactNode }) {
@@ -20,6 +21,8 @@ export default function GamesLayout({ children }: { children: React.ReactNode })
         </nav>
       </header>
       {children}
+      {/* Vercel Web Analytics: anonymous page counts for the games pages (no cookies). */}
+      <Script src="/_vercel/insights/script.js" strategy="afterInteractive" />
     </div>
   );
 }
